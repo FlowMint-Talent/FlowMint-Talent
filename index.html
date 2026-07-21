@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.2.3/css/flag-icons.min.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -55,6 +56,7 @@ a{text-decoration:none;color:inherit}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--mint) 40%,transparent)}
 
 .hero-flag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,200,150,.1);border:1px solid rgba(0,200,150,.2);color:var(--mint);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 16px;border-radius:30px;margin-bottom:2rem}
+.hero-flag .fi{font-size:15px;vertical-align:-2px;border-radius:2px}
 .hero h1{font-size:clamp(2.6rem,6vw,4.2rem);font-weight:700;color:var(--white);margin:0 auto 1.5rem;max-width:820px;letter-spacing:-2px;line-height:1.06}
 .hero h1 em{color:var(--mint);font-style:normal}
 .hero-sub{font-size:1.15rem;color:rgba(255,255,255,.5);line-height:1.8;margin:0 auto 2.75rem;max-width:540px;font-weight:300}
@@ -137,7 +139,8 @@ a{text-decoration:none;color:inherit}
 .mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 .mc{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:2rem;position:relative;overflow:hidden}
 .mc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--mint)}
-.mc-flag{font-size:38px;margin-bottom:1rem;display:block;line-height:1}
+.mc-flag{margin-bottom:1rem;display:block;line-height:1}
+.mc-flag.fi{font-size:38px;border-radius:4px}
 .mc h3{font-size:19px;font-weight:700;color:var(--text);margin-bottom:.25rem}
 .mc .ms{font-size:13px;color:var(--muted);margin-bottom:1.5rem}
 .mc-row{display:flex;justify-content:space-between;align-items:baseline;padding:.6rem 0;border-bottom:1px solid var(--border);font-size:13.5px}
@@ -195,7 +198,7 @@ a{text-decoration:none;color:inherit}
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-flag">&#127482;&#127480; United States &nbsp;&middot;&nbsp; &#127468;&#127463; United Kingdom</div>
+  <div class="hero-flag"><span class="fi fi-us"></span> United States &nbsp;&middot;&nbsp; <span class="fi fi-gb"></span> United Kingdom</div>
   <h1>Connecting you with <em>the people building the future.</em></h1>
   <p class="hero-sub">FlowMint Talent places exceptional AI professionals into companies that know the difference between hiring fast and hiring right.</p>
   <div class="hero-btns">
@@ -410,7 +413,7 @@ a{text-decoration:none;color:inherit}
     <p class="sub">One relationship covers both the US and UK &mdash; giving employers a single contact for international hiring and candidates access to both markets.</p>
     <div class="mkt-grid">
       <div class="mc">
-        <span class="mc-flag">&#127482;&#127480;</span>
+        <span class="mc-flag fi fi-us"></span>
         <h3>United States</h3>
         <div class="ms">Highest salaries, deepest demand &mdash; our primary market</div>
         <div class="mc-row"><span class="k">Mid-level AI roles</span><span class="v">$100k &ndash; $160k</span></div>
@@ -420,7 +423,7 @@ a{text-decoration:none;color:inherit}
         <div class="mc-row"><span class="k">Remote roles</span><span class="v">60%+ of all briefs</span></div>
       </div>
       <div class="mc">
-        <span class="mc-flag">&#127468;&#127463;</span>
+        <span class="mc-flag fi fi-gb"></span>
         <h3>United Kingdom</h3>
         <div class="ms">Fastest-growing AI talent market in Europe</div>
         <div class="mc-row"><span class="k">Mid-level AI roles</span><span class="v">&pound;45k &ndash; &pound;70k</span></div>
