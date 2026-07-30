@@ -147,6 +147,17 @@ a{text-decoration:none;color:inherit}
 .mc-row:last-child{border-bottom:none}
 .mc-row .k{color:var(--sub)}
 .mc-row .v{font-weight:700;color:var(--text);font-family:'Space Grotesk',sans-serif}
+.sal{margin-bottom:1.25rem}
+.sal-hd,.sal-row{display:grid;grid-template-columns:1.05fr .95fr 1fr;gap:.6rem;align-items:baseline}
+.sal-hd{padding-bottom:.5rem;border-bottom:1px solid var(--border);font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.sal-hd .n,.sal-row .n{text-align:right}
+.sal-row{padding:.55rem 0;border-bottom:1px solid var(--border)}
+.sal-row:last-child{border-bottom:none}
+.sal-row .lvl{font-size:13px;font-weight:600;color:var(--text)}
+.sal-row .lvl em{display:block;font-style:normal;font-size:10.5px;font-weight:400;color:var(--muted);letter-spacing:.02em}
+.sal-row .n{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--sub);white-space:nowrap}
+.sal-row .n.tc{font-weight:700;color:var(--text)}
+.sal-note{font-size:11.5px;color:var(--muted);line-height:1.5;margin-bottom:1.25rem}
 
 /* CTA */
 .cta{background:var(--navy);padding:6rem 1.75rem;text-align:center;position:relative;overflow:hidden}
@@ -180,6 +191,10 @@ a{text-decoration:none;color:inherit}
   .hero{padding:3.5rem 1.25rem 3rem}
   .stats{gap:1.75rem}
   .mkt-nums{grid-template-columns:1fr}
+  .mc{padding:1.5rem}
+  .sal-hd,.sal-row{gap:.4rem}
+  .sal-row .n{font-size:11px}
+  .sal-hd{font-size:9px;letter-spacing:.05em}
 }
 </style>
 </head>
@@ -416,9 +431,15 @@ a{text-decoration:none;color:inherit}
         <span class="mc-flag fi fi-us"></span>
         <h3>United States</h3>
         <div class="ms">Highest salaries, deepest demand &mdash; our primary market</div>
-        <div class="mc-row"><span class="k">Mid-level AI roles</span><span class="v">$100k &ndash; $160k</span></div>
-        <div class="mc-row"><span class="k">Senior AI specialists</span><span class="v">$160k &ndash; $250k</span></div>
-        <div class="mc-row"><span class="k">Director / Head of AI</span><span class="v">$200k &ndash; $400k</span></div>
+        <div class="sal">
+          <div class="sal-hd"><span>Level</span><span class="n">Base</span><span class="n">Total comp</span></div>
+          <div class="sal-row"><span class="lvl">Junior<em>0&ndash;2 yrs</em></span><span class="n">$120K &ndash; $170K</span><span class="n tc">$150K &ndash; $220K</span></div>
+          <div class="sal-row"><span class="lvl">Mid<em>3&ndash;5 yrs</em></span><span class="n">$170K &ndash; $240K</span><span class="n tc">$230K &ndash; $380K</span></div>
+          <div class="sal-row"><span class="lvl">Senior<em>5&ndash;8 yrs</em></span><span class="n">$220K &ndash; $310K</span><span class="n tc">$340K &ndash; $550K</span></div>
+          <div class="sal-row"><span class="lvl">Staff<em>8&ndash;12 yrs</em></span><span class="n">$280K &ndash; $400K</span><span class="n tc">$500K &ndash; $800K</span></div>
+          <div class="sal-row"><span class="lvl">Principal<em>12+ yrs</em></span><span class="n">$350K &ndash; $500K</span><span class="n tc">$700K &ndash; $1.2M+</span></div>
+        </div>
+        <div class="sal-note">Total comp includes base plus bonus and equity.</div>
         <div class="mc-row"><span class="k">Key cities</span><span class="v">SF &middot; NY &middot; Austin &middot; Chicago</span></div>
         <div class="mc-row"><span class="k">Remote roles</span><span class="v">60%+ of all briefs</span></div>
       </div>
@@ -426,9 +447,15 @@ a{text-decoration:none;color:inherit}
         <span class="mc-flag fi fi-gb"></span>
         <h3>United Kingdom</h3>
         <div class="ms">Fastest-growing AI talent market in Europe</div>
-        <div class="mc-row"><span class="k">Mid-level AI roles</span><span class="v">&pound;45k &ndash; &pound;70k</span></div>
-        <div class="mc-row"><span class="k">Senior AI specialists</span><span class="v">&pound;70k &ndash; &pound;100k</span></div>
-        <div class="mc-row"><span class="k">Director / Head of AI</span><span class="v">&pound;90k &ndash; &pound;140k</span></div>
+        <div class="sal">
+          <div class="sal-hd"><span>Level</span><span class="n">Base</span><span class="n">Total comp</span></div>
+          <div class="sal-row"><span class="lvl">Junior<em>0&ndash;2 yrs</em></span><span class="n">&pound;90K &ndash; &pound;125K</span><span class="n tc">&pound;110K &ndash; &pound;165K</span></div>
+          <div class="sal-row"><span class="lvl">Mid<em>3&ndash;5 yrs</em></span><span class="n">&pound;125K &ndash; &pound;180K</span><span class="n tc">&pound;170K &ndash; &pound;280K</span></div>
+          <div class="sal-row"><span class="lvl">Senior<em>5&ndash;8 yrs</em></span><span class="n">&pound;165K &ndash; &pound;230K</span><span class="n tc">&pound;250K &ndash; &pound;410K</span></div>
+          <div class="sal-row"><span class="lvl">Staff<em>8&ndash;12 yrs</em></span><span class="n">&pound;205K &ndash; &pound;295K</span><span class="n tc">&pound;370K &ndash; &pound;590K</span></div>
+          <div class="sal-row"><span class="lvl">Principal<em>12+ yrs</em></span><span class="n">&pound;260K &ndash; &pound;370K</span><span class="n tc">&pound;520K &ndash; &pound;890K+</span></div>
+        </div>
+        <div class="sal-note">UK figures converted from US benchmarks at approximately &pound;1 = $1.35.</div>
         <div class="mc-row"><span class="k">Key cities</span><span class="v">London &middot; Manchester &middot; Birmingham</span></div>
         <div class="mc-row"><span class="k">Salary growth year on year</span><span class="v">+58%</span></div>
       </div>
