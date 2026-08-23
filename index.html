@@ -65,6 +65,43 @@ a{text-decoration:none;color:inherit}
 .hero-strapline span{color:var(--mint);font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase}
 .hero-strapline::before,.hero-strapline::after{content:'';display:block;width:32px;height:1px;background:rgba(255,255,255,0.15)}
 
+/* HERO MOTION LAYER */
+.hero{min-height:clamp(560px,88vh,900px);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.hero-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+#heroAura{z-index:0}
+#heroField{z-index:1}
+#heroGlow{z-index:1;mix-blend-mode:screen}
+.hero::before{z-index:1}
+.hero::after{z-index:5}
+
+/* legibility scrim: keeps every word readable over the animation */
+.hero-scrim{position:absolute;inset:0;z-index:2;pointer-events:none;background:
+  radial-gradient(ellipse 62% 58% at 50% 50%,rgba(13,27,42,.86) 0%,rgba(13,27,42,.62) 42%,rgba(13,27,42,0) 78%),
+  linear-gradient(180deg,rgba(13,27,42,.92) 0%,rgba(13,27,42,.18) 24%,rgba(13,27,42,.18) 70%,rgba(13,27,42,.94) 100%)}
+
+.hero-inner{position:relative;z-index:3;width:100%;max-width:900px;margin:0 auto}
+.hero-inner .hero-flag{background:rgba(0,200,150,.16);border-color:rgba(0,200,150,.38);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.hero-inner h1{text-shadow:0 2px 30px rgba(5,11,18,.85),0 1px 3px rgba(5,11,18,.7)}
+.hero-inner .hero-sub{color:rgba(255,255,255,.72);text-shadow:0 1px 18px rgba(5,11,18,.9)}
+.hero-inner .hero-strapline{color:rgba(255,255,255,.42)}
+.hero-inner .btn-ghost{background:rgba(13,27,42,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-color:rgba(255,255,255,.35)}
+.hero-inner .btn-mint{box-shadow:0 8px 30px rgba(0,200,150,.22)}
+
+/* staged reveal - only ever applied once JS confirms the animation is running */
+@keyframes hero-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero--motion .hero-rv{opacity:0}
+.hero--motion .hero-rv.is-in{animation:hero-rise .95s cubic-bezier(.22,.61,.36,1) forwards}
+
+.hero-skip{position:absolute;bottom:22px;right:26px;z-index:4;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.45);background:none;border:none;cursor:pointer;opacity:0;pointer-events:none;transition:color .2s,opacity .35s}
+.hero-skip.is-shown{opacity:1;pointer-events:auto}
+.hero-skip:hover{color:var(--mint)}
+
+@media(prefers-reduced-motion:reduce){
+  .hero-canvas{display:none}
+  .hero-skip{display:none}
+  .hero--motion .hero-rv{opacity:1;animation:none;transform:none}
+}
+
 /* STATS */
 .stats{background:var(--navy2);border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);padding:1.75rem 2rem;display:flex;justify-content:center;gap:4rem;flex-wrap:wrap}
 .stat{text-align:center}
@@ -215,7 +252,8 @@ a{text-decoration:none;color:inherit}
   .footer-links{justify-content:center}
 }
 @media(max-width:500px){
-  .hero{padding:3.5rem 1.25rem 3rem}
+  .hero{padding:3.5rem 1.25rem 3rem;min-height:clamp(500px,82vh,760px)}
+  .hero-skip{bottom:14px;right:16px}
   .stats{gap:1.75rem}
   .mkt-nums{grid-template-columns:1fr}
   .mc{padding:1.5rem}
@@ -241,15 +279,24 @@ a{text-decoration:none;color:inherit}
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-flag"><span class="fi fi-us"></span> United States &nbsp;&middot;&nbsp; <span class="fi fi-gb"></span> United Kingdom</div>
-  <h1>Connecting you<br><em>to the people building the future.</em></h1>
-  <p class="hero-sub">FlowMint Talent places exceptional AI professionals into companies that know the difference between hiring fast and hiring right.</p>
-  <div class="hero-btns">
-    <a href="#cta" class="btn btn-mint">Hire AI Talent &rarr;</a>
-    <a href="#who" class="btn btn-ghost">Find Me a Role</a>
+<section class="hero" id="hero">
+  <canvas class="hero-canvas" id="heroAura"></canvas>
+  <canvas class="hero-canvas" id="heroField"></canvas>
+  <canvas class="hero-canvas" id="heroGlow"></canvas>
+  <div class="hero-scrim"></div>
+
+  <div class="hero-inner">
+    <div class="hero-flag hero-rv"><span class="fi fi-us"></span> United States &nbsp;&middot;&nbsp; <span class="fi fi-gb"></span> United Kingdom</div>
+    <h1 class="hero-rv">Connecting you<br><em>to the people building the future.</em></h1>
+    <p class="hero-sub hero-rv">FlowMint Talent places exceptional AI professionals into companies that know the difference between hiring fast and hiring right.</p>
+    <div class="hero-btns hero-rv">
+      <a href="#cta" class="btn btn-mint">Hire AI Talent &rarr;</a>
+      <a href="#who" class="btn btn-ghost">Find Me a Role</a>
+    </div>
+    <div class="hero-strapline hero-rv"><span>Your Vision. Our Experts. Your AI Talent Partner.</span></div>
   </div>
-  <div class="hero-strapline"><span>Your Vision. Our Experts. Your AI Talent Partner.</span></div>
+
+  <button class="hero-skip" id="heroSkip" type="button">Skip intro</button>
 </section>
 
 <!-- STATS -->
@@ -636,6 +683,375 @@ a{text-decoration:none;color:inherit}
       status.className = 'cf-status show err';
     });
   });
+})();
+</script>
+
+<!-- HERO MOTION - scoped to the landing hero only -->
+<script>
+(function(){
+  var hero = document.getElementById('hero');
+  if(!hero) return;
+
+  var REVEAL_IDS = ['.hero-flag','h1','.hero-sub','.hero-btns','.hero-strapline'];
+  var revealed = false;
+
+  function revealText(){
+    if(revealed) return;
+    revealed = true;
+    REVEAL_IDS.forEach(function(sel, i){
+      var el = hero.querySelector(sel);
+      if(!el) return;
+      el.style.animationDelay = (i * 0.13) + 's';
+      el.classList.add('is-in');
+    });
+  }
+
+  var reduceMotion = !window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var auraCanvas = document.getElementById('heroAura');
+  var fieldCanvas = document.getElementById('heroField');
+  var glowCanvas = document.getElementById('heroGlow');
+
+  // Bail out to plain, fully-visible text if anything is unavailable.
+  if(reduceMotion || !auraCanvas || !fieldCanvas || !glowCanvas || !auraCanvas.getContext){
+    return;
+  }
+
+  var auraCtx = auraCanvas.getContext('2d');
+  var fieldCtx = fieldCanvas.getContext('2d');
+  var glowCtx = glowCanvas.getContext('2d');
+  if(!auraCtx || !fieldCtx || !glowCtx) return;
+
+  // Only now do we allow the copy to start hidden - and we guarantee it comes back.
+  hero.classList.add('hero--motion');
+  var safety = setTimeout(revealText, 2800);
+
+  var W, H, DPR, CX, CY;
+  var particles = [], pulses = [], ripples = [], motes = [];
+  var mouse = { x:-9999, y:-9999, active:false };
+
+  var PHASE = 'gather';
+  var phaseStart = performance.now();
+  var GATHER_MS = 1200, HOLD_MS = 700, DISSOLVE_MS = 1300;
+  var MAX_DIST = 140;
+  var lastSpawn = 0;
+  var running = true;
+
+  function sizeCanvas(c, ctx){
+    c.width = Math.max(1, Math.round(W * DPR));
+    c.height = Math.max(1, Math.round(H * DPR));
+    c.style.width = W + 'px';
+    c.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = hero.clientWidth; H = hero.clientHeight;
+    CX = W / 2; CY = H / 2;
+    sizeCanvas(auraCanvas, auraCtx);
+    sizeCanvas(fieldCanvas, fieldCtx);
+    sizeCanvas(glowCanvas, glowCtx);
+  }
+
+  function initParticles(){
+    particles = [];
+    var count = W < 700 ? 60 : 110;
+    var R = Math.min(W, H) * 0.17;
+    for(var i = 0; i < count; i++){
+      var a = (i / count) * Math.PI * 2;
+      particles.push({
+        x: Math.random() * W, y: Math.random() * H,
+        tx: CX + Math.cos(a) * R, ty: CY + Math.sin(a) * R,
+        baseVx: (Math.random() - 0.5) * 0.22,
+        baseVy: (Math.random() - 0.5) * 0.22,
+        vx: 0, vy: 0,
+        r: Math.random() * 1.5 + 0.8
+      });
+    }
+  }
+
+  function initMotes(){
+    motes = [];
+    var count = W < 700 ? 14 : 26;
+    for(var i = 0; i < count; i++){
+      motes.push({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 2 + 0.6,
+        speed: Math.random() * 0.28 + 0.08,
+        drift: (Math.random() - 0.5) * 0.18,
+        alpha: Math.random() * 0.32 + 0.1
+      });
+    }
+  }
+
+  var auraT = 0;
+  function drawAura(){
+    auraCtx.clearRect(0, 0, W, H);
+    auraT += 0.0022;
+    var blobs = [
+      { x:0.30 + Math.sin(auraT * 1.1) * 0.12, y:0.35 + Math.cos(auraT * 0.9) * 0.10, r:0.55, c:'rgba(0,200,150,0.11)' },
+      { x:0.70 + Math.cos(auraT * 0.8) * 0.10, y:0.60 + Math.sin(auraT * 1.3) * 0.12, r:0.50, c:'rgba(105,240,195,0.08)' },
+      { x:0.50 + Math.sin(auraT * 0.6) * 0.15, y:0.82 + Math.cos(auraT * 1.0) * 0.08, r:0.60, c:'rgba(0,200,150,0.06)' }
+    ];
+    for(var i = 0; i < blobs.length; i++){
+      var b = blobs[i], gx = b.x * W, gy = b.y * H, gr = b.r * Math.max(W, H);
+      var g = auraCtx.createRadialGradient(gx, gy, 0, gx, gy, gr);
+      g.addColorStop(0, b.c);
+      g.addColorStop(1, 'rgba(13,27,42,0)');
+      auraCtx.fillStyle = g;
+      auraCtx.fillRect(0, 0, W, H);
+    }
+  }
+
+  function spawnPulse(){
+    if(particles.length < 2) return;
+    var a = particles[Math.floor(Math.random() * particles.length)];
+    var best = null, bestD = MAX_DIST;
+    for(var i = 0; i < particles.length; i++){
+      var b = particles[i];
+      if(b === a) continue;
+      var d = Math.hypot(a.x - b.x, a.y - b.y);
+      if(d < bestD){ bestD = d; best = b; }
+    }
+    if(best) pulses.push({ a:a, b:best, t:0, speed:0.011 + Math.random() * 0.012 });
+  }
+
+  function updatePhase(ts){
+    var elapsed = ts - phaseStart;
+    if(PHASE === 'gather' && elapsed > GATHER_MS){
+      PHASE = 'hold'; phaseStart = ts;
+    } else if(PHASE === 'hold' && elapsed > HOLD_MS){
+      PHASE = 'dissolve'; phaseStart = ts;
+      for(var i = 0; i < particles.length; i++){
+        var p = particles[i];
+        var ang = Math.atan2(p.y - CY, p.x - CX) || Math.random() * Math.PI * 2;
+        p.vx = Math.cos(ang) * (1.2 + Math.random() * 1.4);
+        p.vy = Math.sin(ang) * (1.2 + Math.random() * 1.4);
+      }
+      revealText();
+    } else if(PHASE === 'dissolve' && elapsed > DISSOLVE_MS){
+      PHASE = 'ambient'; phaseStart = ts;
+    }
+  }
+
+  function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
+  function drawField(ts){
+    fieldCtx.clearRect(0, 0, W, H);
+    updatePhase(ts);
+
+    var i, j, p;
+    for(i = 0; i < particles.length; i++){
+      p = particles[i];
+      if(PHASE === 'gather'){
+        var t = easeOutCubic(Math.min((ts - phaseStart) / GATHER_MS, 1));
+        p.x += (p.tx - p.x) * 0.06 * (0.4 + t);
+        p.y += (p.ty - p.y) * 0.06 * (0.4 + t);
+      } else if(PHASE === 'hold'){
+        p.x += (p.tx - p.x) * 0.12;
+        p.y += (p.ty - p.y) * 0.12;
+        p.x += Math.sin(ts * 0.003 + i) * 0.06;
+        p.y += Math.cos(ts * 0.003 + i) * 0.06;
+      } else if(PHASE === 'dissolve'){
+        p.x += p.vx; p.y += p.vy;
+        p.vx *= 0.965; p.vy *= 0.965;
+      } else {
+        p.vx += (p.baseVx - p.vx) * 0.02;
+        p.vy += (p.baseVy - p.vy) * 0.02;
+        if(mouse.active){
+          var dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.hypot(dx, dy);
+          if(d < 170 && d > 0.01){
+            var f = (170 - d) / 170 * 0.9;
+            p.vx += (dx / d) * f; p.vy += (dy / d) * f;
+          }
+        }
+        for(var r = 0; r < ripples.length; r++){
+          var rp = ripples[r];
+          var dx2 = p.x - rp.x, dy2 = p.y - rp.y, d2 = Math.hypot(dx2, dy2);
+          var ring = Math.abs(d2 - rp.radius);
+          if(ring < 40 && d2 > 0.01){
+            var f2 = (40 - ring) / 40 * 1.3;
+            p.vx += (dx2 / d2) * f2; p.vy += (dy2 / d2) * f2;
+          }
+        }
+        p.x += p.vx; p.y += p.vy;
+        p.vx *= 0.94; p.vy *= 0.94;
+        if(p.x < 0){ p.x = 0; p.baseVx *= -1; }
+        if(p.x > W){ p.x = W; p.baseVx *= -1; }
+        if(p.y < 0){ p.y = 0; p.baseVy *= -1; }
+        if(p.y > H){ p.y = H; p.baseVy *= -1; }
+      }
+    }
+
+    var maxDist = PHASE === 'hold' ? MAX_DIST * 1.3 : MAX_DIST;
+    fieldCtx.lineWidth = 1;
+    for(i = 0; i < particles.length; i++){
+      for(j = i + 1; j < particles.length; j++){
+        var a = particles[i], b = particles[j];
+        var dd = Math.hypot(a.x - b.x, a.y - b.y);
+        if(dd < maxDist){
+          var alpha = (1 - dd / maxDist) * (PHASE === 'hold' ? 0.26 : 0.15);
+          fieldCtx.strokeStyle = 'rgba(105,240,195,' + alpha + ')';
+          fieldCtx.beginPath();
+          fieldCtx.moveTo(a.x, a.y);
+          fieldCtx.lineTo(b.x, b.y);
+          fieldCtx.stroke();
+        }
+      }
+    }
+
+    fieldCtx.fillStyle = 'rgba(234,243,239,0.6)';
+    for(i = 0; i < particles.length; i++){
+      p = particles[i];
+      fieldCtx.beginPath();
+      fieldCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      fieldCtx.fill();
+    }
+
+    if(PHASE === 'ambient' && ts - lastSpawn > 300){ spawnPulse(); lastSpawn = ts; }
+    if(PHASE === 'hold' && ts - lastSpawn > 140){ spawnPulse(); lastSpawn = ts; }
+
+    for(i = pulses.length - 1; i >= 0; i--){
+      var pl = pulses[i];
+      pl.t += pl.speed;
+      if(pl.t >= 1){ pulses.splice(i, 1); continue; }
+      var px = pl.a.x + (pl.b.x - pl.a.x) * pl.t;
+      var py = pl.a.y + (pl.b.y - pl.a.y) * pl.t;
+      var fade = Math.sin(pl.t * Math.PI);
+      var pg = fieldCtx.createRadialGradient(px, py, 0, px, py, 8);
+      pg.addColorStop(0, 'rgba(105,240,195,' + (0.85 * fade) + ')');
+      pg.addColorStop(1, 'rgba(105,240,195,0)');
+      fieldCtx.fillStyle = pg;
+      fieldCtx.beginPath();
+      fieldCtx.arc(px, py, 8, 0, Math.PI * 2);
+      fieldCtx.fill();
+    }
+
+    for(var k = ripples.length - 1; k >= 0; k--){
+      var rr = ripples[k];
+      rr.radius += 3.4; rr.life -= 0.014;
+      if(rr.life <= 0){ ripples.splice(k, 1); continue; }
+      fieldCtx.beginPath();
+      fieldCtx.strokeStyle = 'rgba(105,240,195,' + (rr.life * 0.45) + ')';
+      fieldCtx.lineWidth = 1.4;
+      fieldCtx.arc(rr.x, rr.y, rr.radius, 0, Math.PI * 2);
+      fieldCtx.stroke();
+    }
+
+    if(PHASE === 'hold'){
+      var holdT = (ts - phaseStart) / HOLD_MS;
+      var pr = 40 + Math.sin(holdT * Math.PI * 3) * 6;
+      var cg = fieldCtx.createRadialGradient(CX, CY, 0, CX, CY, pr);
+      cg.addColorStop(0, 'rgba(105,240,195,0.32)');
+      cg.addColorStop(1, 'rgba(105,240,195,0)');
+      fieldCtx.fillStyle = cg;
+      fieldCtx.beginPath();
+      fieldCtx.arc(CX, CY, pr, 0, Math.PI * 2);
+      fieldCtx.fill();
+    }
+  }
+
+  function drawMotes(){
+    glowCtx.clearRect(0, 0, W, H);
+    for(var i = 0; i < motes.length; i++){
+      var m = motes[i];
+      m.y -= m.speed; m.x += m.drift;
+      if(m.y < -10){ m.y = H + 10; m.x = Math.random() * W; }
+      var g = glowCtx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.r * 5);
+      g.addColorStop(0, 'rgba(105,240,195,' + m.alpha + ')');
+      g.addColorStop(1, 'rgba(105,240,195,0)');
+      glowCtx.fillStyle = g;
+      glowCtx.beginPath();
+      glowCtx.arc(m.x, m.y, m.r * 5, 0, Math.PI * 2);
+      glowCtx.fill();
+    }
+  }
+
+  var skipBtn = document.getElementById('heroSkip');
+
+  function finishIntro(){
+    if(PHASE === 'ambient' || PHASE === 'dissolve') return;
+    PHASE = 'dissolve';
+    phaseStart = performance.now();
+    for(var i = 0; i < particles.length; i++){
+      var p = particles[i];
+      var ang = Math.random() * Math.PI * 2;
+      p.vx = Math.cos(ang) * 2; p.vy = Math.sin(ang) * 2;
+    }
+    revealText();
+  }
+
+  if(skipBtn){
+    skipBtn.classList.add('is-shown');
+    skipBtn.addEventListener('click', function(){
+      finishIntro();
+      skipBtn.classList.remove('is-shown');
+    });
+  }
+
+  function loop(ts){
+    if(!running) return;
+    try{
+      drawAura();
+      drawField(ts);
+      drawMotes();
+    } catch(err){
+      running = false;
+      revealText();
+      return;
+    }
+    if(skipBtn && PHASE === 'ambient') skipBtn.classList.remove('is-shown');
+    requestAnimationFrame(loop);
+  }
+
+  function getPos(e){
+    var rect = hero.getBoundingClientRect();
+    var cx = e.touches ? e.touches[0].clientX : e.clientX;
+    var cy = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: cx - rect.left, y: cy - rect.top };
+  }
+
+  hero.addEventListener('mousemove', function(e){
+    var p = getPos(e); mouse.x = p.x; mouse.y = p.y; mouse.active = true;
+  });
+  hero.addEventListener('mouseleave', function(){ mouse.active = false; });
+  hero.addEventListener('touchmove', function(e){
+    var p = getPos(e); mouse.x = p.x; mouse.y = p.y; mouse.active = true;
+  }, { passive:true });
+
+  function triggerRipple(e){
+    if(PHASE !== 'ambient') return;
+    if(e.target.closest && e.target.closest('a,button')) return;
+    var p = getPos(e);
+    ripples.push({ x:p.x, y:p.y, radius:0, life:1 });
+    for(var i = 0; i < 6; i++) spawnPulse();
+  }
+  hero.addEventListener('click', triggerRipple);
+  hero.addEventListener('touchstart', triggerRipple, { passive:true });
+
+  var resizeTimer;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function(){
+      resize(); initParticles(); initMotes();
+    }, 150);
+  });
+
+  // Stop burning frames once the hero scrolls away - the rest of the page is untouched.
+  if(window.IntersectionObserver){
+    new IntersectionObserver(function(entries){
+      var visible = entries[0].isIntersecting;
+      if(visible && !running){ running = true; requestAnimationFrame(loop); }
+      else if(!visible){ running = false; }
+    }, { threshold:0 }).observe(hero);
+  }
+
+  window.addEventListener('pagehide', function(){ clearTimeout(safety); });
+
+  resize();
+  initParticles();
+  initMotes();
+  requestAnimationFrame(loop);
 })();
 </script>
 
