@@ -171,6 +171,64 @@ a{text-decoration:none;color:inherit}
 .who-emp .ck{background:rgba(0,200,150,.1);color:var(--mint)}
 .who-can .ck{background:var(--mintp);color:var(--mintd)}
 
+/* JOBS */
+.jobs{padding:5.5rem 1.75rem;background:var(--navy);position:relative;overflow:hidden;scroll-margin-top:64px}
+.jobs::before{content:'';position:absolute;top:-140px;right:-160px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(0,200,150,.08) 0%,transparent 70%);pointer-events:none}
+.jobs .wrap{position:relative;z-index:1}
+.jobs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:1.25rem;align-items:start}
+
+.job{background:var(--navy2);border:1px solid rgba(255,255,255,.06);border-left:3px solid rgba(0,200,150,.45);border-radius:var(--r);transition:border-color .2s,box-shadow .2s;scroll-margin-top:80px}
+.job:hover{border-color:rgba(0,200,150,.22);border-left-color:var(--mint)}
+.job[open]{border-color:rgba(0,200,150,.3);border-left-color:var(--mint);box-shadow:0 10px 34px rgba(0,0,0,.32)}
+
+.job-sum{display:block;position:relative;list-style:none;cursor:pointer;padding:1.6rem 1.75rem;border-radius:var(--r)}
+.job-sum::-webkit-details-marker{display:none}
+.job-sum::marker{content:''}
+.job-sum:focus-visible{outline:2px solid var(--mint);outline-offset:-3px}
+
+.job-hd{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.2rem 1rem;margin-bottom:.9rem}
+.job-hd h3{font-size:19px;font-weight:700;color:var(--white);transition:color .2s}
+.job:hover .job-hd h3,.job[open] .job-hd h3{color:#eafff8}
+.job-sal{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--mint);white-space:nowrap}
+
+.job-meta{display:flex;flex-wrap:wrap;gap:.4rem}
+.job-meta span{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.4);background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:4px 11px;line-height:1.5}
+.job-meta .job-loc{color:var(--mint);background:rgba(0,200,150,.1);border-color:rgba(0,200,150,.22)}
+.job-pin{flex-shrink:0}
+
+.job-toggle{display:inline-flex;align-items:center;gap:7px;margin-top:1.1rem;font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:rgba(255,255,255,.32);transition:color .2s}
+.job:hover .job-toggle,.job[open] .job-toggle{color:var(--mint)}
+.job-toggle em{font-style:normal}
+.job-toggle [data-open]{display:none}
+.job[open] .job-toggle [data-closed]{display:none}
+.job[open] .job-toggle [data-open]{display:inline}
+.job-chev{display:flex;transition:transform .25s ease}
+.job[open] .job-chev{transform:rotate(180deg)}
+
+.job-body{margin:0 1.75rem;padding-bottom:1.75rem;border-top:1px solid rgba(255,255,255,.06)}
+.job[open] .job-body{animation:job-reveal .32s cubic-bezier(.22,.61,.36,1) both}
+@keyframes job-reveal{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.job-desc{font-size:14px;color:rgba(255,255,255,.62);line-height:1.75;margin:1.4rem 0 1.5rem}
+.job-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mint);margin-bottom:.75rem}
+.job-skills{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.5rem}
+.job-skills li{display:flex;align-items:flex-start;gap:11px;font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.58)}
+.job-skills li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--mint);flex-shrink:0;margin-top:.5rem;opacity:.75}
+.job-conf{font-size:12.5px;color:rgba(255,255,255,.3);line-height:1.6;margin-bottom:1.4rem}
+.job-foot{display:flex;align-items:center;flex-wrap:wrap;gap:.85rem 1.1rem}
+.job-apply{padding:11px 26px;font-size:14px}
+.job-mail{font-size:12.5px;color:rgba(255,255,255,.28)}
+.job-mail a{color:rgba(255,255,255,.5);text-decoration:underline;text-underline-offset:2px}
+.job-mail a:hover{color:var(--mint)}
+
+.jobs-note{margin-top:2.5rem;text-align:center;font-size:13.5px;color:rgba(255,255,255,.32);line-height:1.8}
+.jobs-note a{color:var(--mint);text-decoration:underline;text-underline-offset:2px}
+.jobs-note a:hover{color:#00dba8}
+
+@media(prefers-reduced-motion:reduce){
+  .job[open] .job-body{animation:none}
+  .job-chev{transition:none}
+}
+
 /* MARKETS */
 .markets{padding:5.5rem 1.75rem;background:var(--off)}
 .mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
@@ -248,6 +306,7 @@ a{text-decoration:none;color:inherit}
   .mkt-nums{grid-template-columns:1fr 1fr}
   .who-grid{grid-template-columns:1fr}
   .mkt-grid{grid-template-columns:1fr}
+  .jobs-grid{grid-template-columns:1fr}
   .footer-in{flex-direction:column;text-align:center}
   .footer-links{justify-content:center}
 }
@@ -260,6 +319,11 @@ a{text-decoration:none;color:inherit}
   .sal-hd,.sal-row{gap:.4rem}
   .sal-row .n{font-size:11px}
   .sal-hd{font-size:9px;letter-spacing:.05em}
+  .job-sum{padding:1.35rem}
+  .job-body{margin:0 1.35rem;padding-bottom:1.35rem}
+  .job-hd h3{font-size:17px}
+  .job-sal{font-size:14px}
+  .job-apply{width:100%;text-align:center}
   .cform{padding:1.35rem}
   .cf-grid{grid-template-columns:1fr}
 }
@@ -274,6 +338,7 @@ a{text-decoration:none;color:inherit}
     <li><a href="#market">AI Market</a></li>
     <li><a href="#process">How It Works</a></li>
     <li><a href="#who">Hire / Be Hired</a></li>
+    <li><a href="#jobs">Live Roles</a></li>
     <li><a href="#cta" class="nav-cta">Get In Touch &rarr;</a></li>
   </ul>
 </nav>
@@ -496,6 +561,230 @@ a{text-decoration:none;color:inherit}
   </div>
 </section>
 
+<!-- JOBS -->
+<section class="jobs" id="jobs">
+  <div class="wrap">
+    <div class="eyebrow">Live Roles</div>
+    <h2 class="ttl ttl-w">Current Opportunities</h2>
+    <p class="sub sub-w">A selection of the roles we are currently working. Select any role to read the full brief. All applications are handled in strict confidence &mdash; client details are disclosed at interview stage.</p>
+
+    <div class="jobs-grid">
+      <details class="job" id="job-1">
+        <summary class="job-sum">
+          <div class="job-hd">
+            <h3>Senior AI Engineer</h3>
+            <span class="job-sal">$165,000 &mdash; $210,000</span>
+          </div>
+          <div class="job-meta">
+            <span class="job-loc"><svg class="job-pin" width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.9"/></svg> New York, NY</span>
+            <span>Permanent</span>
+            <span>Series B</span>
+            <span>Confidential Client</span>
+          </div>
+          <span class="job-toggle">
+            <em data-closed>View full brief</em><em data-open>Hide brief</em>
+            <i class="job-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></i>
+          </span>
+        </summary>
+        <div class="job-body">
+          <p class="job-desc">A Series B enterprise AI company building production LLM applications at scale is looking to add a Senior AI Engineer to its core product team. The company serves Fortune 500 clients and has a strong engineering culture with a bias towards shipping real things fast. You will own AI features end to end from architecture through to production deployment.</p>
+          <div class="job-lbl">Essential Skills</div>
+          <ul class="job-skills">
+            <li>Production RAG architecture &mdash; retrieval, reranking, context optimisation</li>
+            <li>LLM integration and prompt engineering at scale</li>
+            <li>Python, LangChain or LlamaIndex, vector databases (Pinecone, Weaviate)</li>
+            <li>Cloud infrastructure &mdash; AWS, GCP or Azure</li>
+            <li>Experience shipping AI features into production with real users</li>
+          </ul>
+          <p class="job-conf">Full details and client name shared at first conversation stage. All enquiries handled in strict confidence.</p>
+          <div class="job-foot">
+            <a href="mailto:talent@flowmint-talent.com?subject=Application%20%E2%80%94%20Senior%20AI%20Engineer%2C%20New%20York&amp;body=Hi%20FlowMint%20Talent%20team%2C%0A%0AI%20would%20like%20to%20apply%20for%20the%20Senior%20AI%20Engineer%20role%20in%20New%20York.%0A%0AA%20little%20about%20me%3A%0A-%20Current%20role%20%2F%20company%3A%0A-%20Years%20of%20relevant%20experience%3A%0A-%20Notice%20period%3A%0A-%20Salary%20expectations%3A%0A%0AMy%20CV%20is%20attached.%0A%0AMany%20thanks%2C%0A" class="btn btn-mint job-apply">Apply Now &rarr;</a>
+            <span class="job-mail">or email <a href="mailto:talent@flowmint-talent.com?subject=Application%20%E2%80%94%20Senior%20AI%20Engineer%2C%20New%20York">talent@flowmint-talent.com</a></span>
+          </div>
+        </div>
+      </details>
+
+      <details class="job" id="job-2">
+        <summary class="job-sum">
+          <div class="job-hd">
+            <h3>Founding Engineer</h3>
+            <span class="job-sal">$180,000 &mdash; $240,000 + equity</span>
+          </div>
+          <div class="job-meta">
+            <span class="job-loc"><svg class="job-pin" width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.9"/></svg> San Francisco, CA</span>
+            <span>Permanent</span>
+            <span>Early Stage VC Backed</span>
+            <span>Confidential Client</span>
+          </div>
+          <span class="job-toggle">
+            <em data-closed>View full brief</em><em data-open>Hide brief</em>
+            <i class="job-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></i>
+          </span>
+        </summary>
+        <div class="job-body">
+          <p class="job-desc">An early stage agentic AI startup backed by a top tier US venture fund is making its first engineering hire. Reporting directly to the CTO, this person will define the technical architecture, make foundational technology decisions and build the engineering culture from scratch. The equity package is significant and reflects the founding nature of the role. If you want to build something from zero this is the opportunity.</p>
+          <div class="job-lbl">Essential Skills</div>
+          <ul class="job-skills">
+            <li>Strong full stack engineering background with AI engineering depth</li>
+            <li>Experience building agentic AI systems or autonomous workflows</li>
+            <li>Ability to make and own architectural decisions from day one</li>
+            <li>Python and at least one frontend framework</li>
+            <li>Comfort working in ambiguity at pace &mdash; this is a zero to one role</li>
+          </ul>
+          <p class="job-conf">Full details and client name shared at first conversation stage. All enquiries handled in strict confidence.</p>
+          <div class="job-foot">
+            <a href="mailto:talent@flowmint-talent.com?subject=Application%20%E2%80%94%20Founding%20Engineer%2C%20San%20Francisco&amp;body=Hi%20FlowMint%20Talent%20team%2C%0A%0AI%20would%20like%20to%20apply%20for%20the%20Founding%20Engineer%20role%20in%20San%20Francisco.%0A%0AA%20little%20about%20me%3A%0A-%20Current%20role%20%2F%20company%3A%0A-%20Years%20of%20relevant%20experience%3A%0A-%20Notice%20period%3A%0A-%20Salary%20expectations%3A%0A%0AMy%20CV%20is%20attached.%0A%0AMany%20thanks%2C%0A" class="btn btn-mint job-apply">Apply Now &rarr;</a>
+            <span class="job-mail">or email <a href="mailto:talent@flowmint-talent.com?subject=Application%20%E2%80%94%20Founding%20Engineer%2C%20San%20Francisco">talent@flowmint-talent.com</a></span>
+          </div>
+        </div>
+      </details>
+
+      <details class="job" id="job-3">
+        <summary class="job-sum">
+          <div class="job-hd">
+            <h3>Staff AI Engineer</h3>
+            <span class="job-sal">$200,000 &mdash; $260,000</span>
+          </div>
+          <div class="job-meta">
+            <span class="job-loc"><svg class="job-pin" width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.9"/></svg> Austin, TX</span>
+            <span>Permanent</span>
+            <span>Series B</span>
+            <span>Confidential Client</span>
+          </div>
+          <span class="job-toggle">
+            <em data-closed>View full brief</em><em data-open>Hide brief</em>
+            <i class="job-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></i>
+          </span>
+        </summary>
+        <div class="job-body">
+          <p class="job-desc">A well funded AI infrastructure company scaling rapidly across enterprise markets is looking for a Staff AI Engineer to join its platform team. This is a technical leadership role &mdash; hands on delivery combined with team mentorship and contribution to technical strategy. The company has grown headcount by over 60% in the last year and this hire is central to maintaining engineering quality through that growth.</p>
+          <div class="job-lbl">Essential Skills</div>
+          <ul class="job-skills">
+            <li>Deep expertise in distributed systems and ML platform engineering</li>
+            <li>Inference optimisation &mdash; latency, cost reduction, throughput</li>
+            <li>Experience mentoring and technically leading engineering teams</li>
+            <li>Strong Python and systems design background</li>
+            <li>Track record of influencing technical direction at a senior level</li>
+          </ul>
+          <p class="job-conf">Full details and client name shared at first conversation stage. All enquiries handled in strict confidence.</p>
+          <div class="job-foot">
+            <a href="mailto:talent@flowmint-talent.com?subject=Application%20%E2%80%94%20Staff%20AI%20Engineer%2C%20Austin&amp;body=Hi%20FlowMint%20Talent%20team%2C%0A%0AI%20would%20like%20to%20apply%20for%20the%20Staff%20AI%20Engineer%20role%20in%20Austin.%0A%0AA%20little%20about%20me%3A%0A-%20Current%20role%20%2F%20company%3A%0A-%20Years%20of%20relevant%20experience%3A%0A-%20Notice%20period%3A%0A-%20Salary%20expectations%3A%0A%0AMy%20CV%20is%20attached.%0A%0AMany%20thanks%2C%0A" class="btn btn-mint job-apply">Apply Now &rarr;</a>
+            <span class="job-mail">or email <a href="mailto:talent@flowmint-talent.com?subject=Application%20%E2%80%94%20Staff%20AI%20Engineer%2C%20Austin">talent@flowmint-talent.com</a></span>
+          </div>
+        </div>
+      </details>
+
+      <details class="job" id="job-4">
+        <summary class="job-sum">
+          <div class="job-hd">
+            <h3>Machine Learning Engineer</h3>
+            <span class="job-sal">$155,000 &mdash; $195,000</span>
+          </div>
+          <div class="job-meta">
+            <span class="job-loc"><svg class="job-pin" width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.9"/></svg> Boston, MA</span>
+            <span>Permanent</span>
+            <span>Series A</span>
+            <span>Confidential Client</span>
+          </div>
+          <span class="job-toggle">
+            <em data-closed>View full brief</em><em data-open>Hide brief</em>
+            <i class="job-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></i>
+          </span>
+        </summary>
+        <div class="job-body">
+          <p class="job-desc">A Series A healthcare AI company is building proprietary models on one of the largest clinical datasets in the US. The ML Engineer will work closely with clinical teams and data scientists to design, train and evaluate models that have a direct impact on patient outcomes. This is genuine ML engineering in a regulated environment &mdash; not prompt wrapping. The company has strong backing and a clear path to Series B.</p>
+          <div class="job-lbl">Essential Skills</div>
+          <ul class="job-skills">
+            <li>Model fine-tuning on domain specific datasets</li>
+            <li>Strong Python and PyTorch background</li>
+            <li>Experience working in regulated or compliance heavy environments</li>
+            <li>Evaluation frameworks &mdash; metrics design, bias testing, reliability</li>
+            <li>Healthcare or life sciences domain experience advantageous</li>
+          </ul>
+          <p class="job-conf">Full details and client name shared at first conversation stage. All enquiries handled in strict confidence.</p>
+          <div class="job-foot">
+            <a href="mailto:talent@flowmint-talent.com?subject=Application%20%E2%80%94%20Machine%20Learning%20Engineer%2C%20Boston&amp;body=Hi%20FlowMint%20Talent%20team%2C%0A%0AI%20would%20like%20to%20apply%20for%20the%20Machine%20Learning%20Engineer%20role%20in%20Boston.%0A%0AA%20little%20about%20me%3A%0A-%20Current%20role%20%2F%20company%3A%0A-%20Years%20of%20relevant%20experience%3A%0A-%20Notice%20period%3A%0A-%20Salary%20expectations%3A%0A%0AMy%20CV%20is%20attached.%0A%0AMany%20thanks%2C%0A" class="btn btn-mint job-apply">Apply Now &rarr;</a>
+            <span class="job-mail">or email <a href="mailto:talent@flowmint-talent.com?subject=Application%20%E2%80%94%20Machine%20Learning%20Engineer%2C%20Boston">talent@flowmint-talent.com</a></span>
+          </div>
+        </div>
+      </details>
+
+      <details class="job" id="job-5">
+        <summary class="job-sum">
+          <div class="job-hd">
+            <h3>Forward Deployed Engineer</h3>
+            <span class="job-sal">$200,000 &mdash; $300,000</span>
+          </div>
+          <div class="job-meta">
+            <span class="job-loc"><svg class="job-pin" width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.9"/></svg> Miami, FL</span>
+            <span>Permanent</span>
+            <span>Enterprise AI</span>
+            <span>Confidential Client</span>
+          </div>
+          <span class="job-toggle">
+            <em data-closed>View full brief</em><em data-open>Hide brief</em>
+            <i class="job-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></i>
+          </span>
+        </summary>
+        <div class="job-body">
+          <p class="job-desc">One of the most sought after roles in enterprise AI right now. This company embeds senior engineers directly within Fortune 500 client environments to take AI systems from proof of concept to production inside complex, often legacy organisations. You will be the person who makes AI actually work in the real world &mdash; owning the technical relationship with the client, solving the integration problems nobody else can and leaving behind a system that runs reliably long after you have moved on.</p>
+          <div class="job-lbl">Essential Skills</div>
+          <ul class="job-skills">
+            <li>Senior engineering background &mdash; full stack with strong Python</li>
+            <li>Experience deploying AI or complex software into enterprise client environments</li>
+            <li>Exceptional client communication &mdash; able to translate technical complexity to non-technical stakeholders</li>
+            <li>Comfortable working autonomously within client organisations</li>
+            <li>Willingness to travel to client sites as required</li>
+            <li>Agentic AI, RAG or LLM integration experience highly valued</li>
+          </ul>
+          <p class="job-conf">Full details and client name shared at first conversation stage. All enquiries handled in strict confidence.</p>
+          <div class="job-foot">
+            <a href="mailto:talent@flowmint-talent.com?subject=Application%20%E2%80%94%20Forward%20Deployed%20Engineer%2C%20Miami&amp;body=Hi%20FlowMint%20Talent%20team%2C%0A%0AI%20would%20like%20to%20apply%20for%20the%20Forward%20Deployed%20Engineer%20role%20in%20Miami.%0A%0AA%20little%20about%20me%3A%0A-%20Current%20role%20%2F%20company%3A%0A-%20Years%20of%20relevant%20experience%3A%0A-%20Notice%20period%3A%0A-%20Salary%20expectations%3A%0A%0AMy%20CV%20is%20attached.%0A%0AMany%20thanks%2C%0A" class="btn btn-mint job-apply">Apply Now &rarr;</a>
+            <span class="job-mail">or email <a href="mailto:talent@flowmint-talent.com?subject=Application%20%E2%80%94%20Forward%20Deployed%20Engineer%2C%20Miami">talent@flowmint-talent.com</a></span>
+          </div>
+        </div>
+      </details>
+
+      <details class="job" id="job-6">
+        <summary class="job-sum">
+          <div class="job-hd">
+            <h3>Senior Data Engineer</h3>
+            <span class="job-sal">$140,000 &mdash; $175,000</span>
+          </div>
+          <div class="job-meta">
+            <span class="job-loc"><svg class="job-pin" width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.9"/></svg> New York, NY</span>
+            <span>Permanent</span>
+            <span>Series B</span>
+            <span>Confidential Client</span>
+          </div>
+          <span class="job-toggle">
+            <em data-closed>View full brief</em><em data-open>Hide brief</em>
+            <i class="job-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></i>
+          </span>
+        </summary>
+        <div class="job-body">
+          <p class="job-desc">A Series B fintech AI company is building the data infrastructure that powers real time AI decision making across financial services clients. The Senior Data Engineer will design and own the pipelines that feed the ML team &mdash; ensuring data quality, reliability and scalability as the platform grows. This is a role for someone who takes pride in building data infrastructure that genuinely works at scale.</p>
+          <div class="job-lbl">Essential Skills</div>
+          <ul class="job-skills">
+            <li>Strong data pipeline experience &mdash; Spark, dbt, Airflow or similar</li>
+            <li>Cloud data warehouse expertise &mdash; Snowflake, BigQuery or Redshift</li>
+            <li>Python proficiency and strong SQL</li>
+            <li>Experience working closely with ML engineering teams</li>
+            <li>Financial services or fintech domain experience advantageous</li>
+          </ul>
+          <p class="job-conf">Full details and client name shared at first conversation stage. All enquiries handled in strict confidence.</p>
+          <div class="job-foot">
+            <a href="mailto:talent@flowmint-talent.com?subject=Application%20%E2%80%94%20Senior%20Data%20Engineer%2C%20New%20York&amp;body=Hi%20FlowMint%20Talent%20team%2C%0A%0AI%20would%20like%20to%20apply%20for%20the%20Senior%20Data%20Engineer%20role%20in%20New%20York.%0A%0AA%20little%20about%20me%3A%0A-%20Current%20role%20%2F%20company%3A%0A-%20Years%20of%20relevant%20experience%3A%0A-%20Notice%20period%3A%0A-%20Salary%20expectations%3A%0A%0AMy%20CV%20is%20attached.%0A%0AMany%20thanks%2C%0A" class="btn btn-mint job-apply">Apply Now &rarr;</a>
+            <span class="job-mail">or email <a href="mailto:talent@flowmint-talent.com?subject=Application%20%E2%80%94%20Senior%20Data%20Engineer%2C%20New%20York">talent@flowmint-talent.com</a></span>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <p class="jobs-note">Don&rsquo;t see the right role? Send your CV to <a href="mailto:talent@flowmint-talent.com?subject=CV%20submission%20%E2%80%94%20FlowMint%20Talent">talent@flowmint-talent.com</a> and we will be in touch when something relevant comes up.</p>
+  </div>
+</section>
+
 <!-- MARKETS -->
 <section class="markets" id="markets">
   <div class="wrap">
@@ -609,6 +898,7 @@ a{text-decoration:none;color:inherit}
       <li><a href="#market">AI Market</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#who">Hire / Be Hired</a></li>
+      <li><a href="#jobs">Live Roles</a></li>
       <li><a href="#cta">Contact</a></li>
     </ul>
     <div class="footer-copy">&copy; 2025 FlowMint Ltd &nbsp;&middot;&nbsp; US &amp; UK</div>
